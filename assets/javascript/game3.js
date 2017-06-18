@@ -107,7 +107,7 @@ var gameObject = {
 						 image: "assets/images/East.jpg"},
 						{region: "East Charlotte", 
 						 description: "Roughly bound by Hawthorne Lane to the west, The Plaza to the north, Briar Creek Road and the Charlotte Country Club to the east and Central Avenue to the south; Locally known as one of Charlotte's most diverse and eclectic neighborhoods, it is filled with art galleries, funky stores, and restaurants", 
-					     word: "PLAZA-MIDWOOD", 
+					     word: "PLAZA MIDWOOD", 
 						 image: "assets/images/East.jpg"},
 						{region: "East Charlotte", 
 						 description: "An area of East Charlotte bounded by Rama Rd., Sardis Rd. and the McAlpine Greenway; The area's dominant architectural style is the ranch-style house with brick or wood exterior.", 
@@ -149,6 +149,7 @@ var gameObject = {
 	function getCurrentWord(arr) {
 		spaces = " ";
 		dash = "_";
+		//hyphen = "-";
 		currentWord = [];
 		turn;//if works, then remove 0 and place in event function, so that current turn can be mod. 
 		 //select one array item at a time based on turn
@@ -160,12 +161,21 @@ var gameObject = {
 		console.log(currentWordString);
 		var currentWordArray = currentWordString.split("");
 		console.log(currentWordArray);
-		for (var  i = 0; i < currentWordArray.length; i++) {
+		for (i in currentWordArray) {
 		 	if (currentWordArray[i] !== spaces) {//if the letter is not a space
-		 		currentWordArray.fill(dash,i);
+		 		console.log(true);
+		 		currentWordArray[i] = dash;
+		 		console.log(currentWordArray);
+		 	} else if (currentWordArray[i] === spaces) {
+		 		console.log(false);
+		 		currentWordArray[i] = spaces;
 		 		console.log(currentWordArray);
 		 	}
-		 } 
+		 }
+		 document.getElementById("neighborhood-name").innerHTML = currentWordArray.join('&nbsp;&nbsp;');
+		 document.getElementById("region").innerHTML = "Region: " + gameObject.wordBankObject[turn].region;
+		 document.getElementById("hint").innerHTML = "Hint: " + gameObject.wordBankObject[turn].description;
+		 document.getElementById("current-photo").src = gameObject.wordBankObject[turn].image;
 
 	};
 	//var wordToGuess = gameObject.getCurrentWord(gameObject.gameWords);
