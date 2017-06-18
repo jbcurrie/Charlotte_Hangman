@@ -173,9 +173,15 @@ var gameObject = {
 		 	}
 		 }
 		 document.getElementById("neighborhood-name").innerHTML = currentWordArray.join('&nbsp;&nbsp;');
-		 document.getElementById("region").innerHTML = "Region: " + gameObject.wordBankObject[turn].region;
-		 document.getElementById("hint").innerHTML = "Hint: " + gameObject.wordBankObject[turn].description;
-		 document.getElementById("current-photo").src = gameObject.wordBankObject[turn].image;
+		 for (i in gameObject.wordBankObject) {
+
+		 	if (currentWordString === gameObject.wordBankObject[i].word) {
+		 		document.getElementById("region").innerHTML = "Region: " + gameObject.wordBankObject[i].region;
+		 		document.getElementById("hint").innerHTML = "Hint: " + gameObject.wordBankObject[i].description;
+		 		document.getElementById("current-photo").src = gameObject.wordBankObject[i].image;
+		 	}
+		 }
+
 
 	};
 	//var wordToGuess = gameObject.getCurrentWord(gameObject.gameWords);
