@@ -240,6 +240,26 @@ document.onkeyup = function(event) {
 	//}
 	//this is the array that stores the current word - wordBankArray[0]
 }
+
+var boogie = booger(boogie);
+var x = 0;
+var y = "";
+var z = 0;
+
+function booger(arr) {
+	x = 3;
+	y = "booger"
+	z = 4;
+	var arr = []
+	arr.push(x,y,z);
+	return arr;
+}
+
+function bogie() {
+	console.log(boogie);
+}
+
+bogie();
                               
 
 //display original word

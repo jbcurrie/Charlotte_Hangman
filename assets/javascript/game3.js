@@ -4,7 +4,8 @@ var gameObject = {
 		for (var i in gameObject.wordBankObject) {
 			gameObject.gameWords.push(gameObject.wordBankObject[i].word);
 		}
-		console.log(gameObject.gameWords);
+		//console.log(gameObject.gameWords);
+		return gameObject.gameWords;
 	},
 	shuffleWords : function (array) {
 		var i = gameObject.gameWords.length,
@@ -17,9 +18,52 @@ var gameObject = {
 			array[i] = array [j];
 			array[j] = temp;
 		}
-		console.log(gameObject.gameWords);
+		//console.log(gameObject.gameWords);
 		return array;
 	}, 
+	currentWordArray : [],
+	getCurrentWord : function () {		
+		currentWord = [];
+		turn = 0;
+		var idx = gameObject.gameWords.indexOf(gameObject.gameWords[turn]);
+		console.log(idx);
+		currentWord.push(gameObject.gameWords[idx]);
+		console.log(currentWord);
+		var currentWordString = currentWord.toString();
+		console.log(currentWordString);
+		gameObject.currentWordArray = currentWordString.split("");
+		console.log(gameObject.currentWordArray);
+		for (i in gameObject.wordBankObject) {
+
+		 	if (currentWordString === gameObject.wordBankObject[i].word) {
+		 		document.getElementById("region").innerHTML = "Region: " + gameObject.wordBankObject[i].region;
+		 		document.getElementById("hint").innerHTML = "Hint: " + gameObject.wordBankObject[i].description;
+		 		document.getElementById("current-photo").src = gameObject.wordBankObject[i].image;
+		 	}
+		 };
+		return gameObject.currentWordArray;
+	},
+	dashArray : [],
+	dashArray : function (){
+		spaces = " ";
+		dash = "_";
+		dashWord = [];
+		turn = 0;
+		var idx = gameObject.gameWords.indexOf(gameObject.gameWords[turn]);
+		dashWord.push(gameObject.gameWords[idx]);
+		var dashWordString = dashWord.toString();
+		gameObject.dashArray = dashWordString.split("");
+		console.log(gameObject.dashArray);
+		for (i in gameObject.dashArray) {
+		 	if (gameObject.dashArray[i] !== spaces) {//if the letter is not a space
+		 		gameObject.dashArray[i] = dash;
+		 	} else if (gameObject.dashArray[i] === spaces) {
+		 		gameObject.dashArray[i] = spaces;
+		 	}
+		}
+		console.log(gameObject.dashArray);
+		document.getElementById("neighborhood-name").innerHTML = gameObject.dashArray.join('&nbsp;&nbsp;');
+	},
 	wordBankObject : [
 						{region: "South Charlotte", 
 						 description: "Located along Pineville-Matthews Road,  the general area of Charlotte which surrounds the eponymous mixed-use shopping center, apartment community, office complex and medical park which opened in 1989. The shopping center is home to Charlotte's first Wal-Mart store, and the area's name comes from the abundance of trees in the area.", 
@@ -133,81 +177,210 @@ var gameObject = {
 }
 
 //when document is loaded run the following functions:
- function start() {
+document.querySelector("body").onload = function start() {
  	var turn = 0;//this will increase when wins or losses change
+ 	//redefine turn to equal a function. if wordMatch equals true turn++;
  	var wins = 0;
  	var losses = 0;
- 	var guesses = 0;
+ 	var guesses = 12;
+ 	var guessesBank = [];
+ 	var uniqueGuesses = {};
+ 	//var currentWord = getCurrentWord();//an unmutated array of the current word
+ 	//var dashArray = currentWordString.split("");
+ 	//var dashWord = dashArray();
+ 	var uniqueGuessesKeys = [];
+ 	//var currentWordString = currentWord.toString();
+
+ 	//var currentWordArray = currentWordString.split("");
+
 	console.log(gameObject);
 	//document.getElementById("neighborhood-name").innerHTML = gameObject.wordBankObject[0].word;
 	//gameObject.splitWord();
 	gameObject.gameWordsFunction();
 	gameObject.shuffleWords(gameObject.gameWords);
-	getCurrentWord(gameObject.gameWords);
+	gameObject.getCurrentWord(gameObject.gameWords);
+	gameObject.dashArray();
+	//console.log(currentWordString);
+	//getCurrentWord(gameObject.gameWords);
 
-	 
-	function getCurrentWord(arr) {
-		spaces = " ";
-		dash = "_";
-		//hyphen = "-";
-		currentWord = [];
-		turn;//if works, then remove 0 and place in event function, so that current turn can be mod. 
-		 //select one array item at a time based on turn
-		var arr = gameObject.gameWords.indexOf(gameObject.gameWords[turn]);
-		console.log(gameObject.gameWords[arr]);
-		currentWord.push(gameObject.gameWords[arr]);
-		console.log(currentWord);
-		var currentWordString = currentWord.toString();
-		console.log(currentWordString);
-		var currentWordArray = currentWordString.split("");
-		console.log(currentWordArray);
-		for (i in currentWordArray) {
-		 	if (currentWordArray[i] !== spaces) {//if the letter is not a space
-		 		console.log(true);
-		 		currentWordArray[i] = dash;
-		 		console.log(currentWordArray);
-		 	} else if (currentWordArray[i] === spaces) {
-		 		console.log(false);
-		 		currentWordArray[i] = spaces;
-		 		console.log(currentWordArray);
-		 	}
-		 }
-		 document.getElementById("neighborhood-name").innerHTML = currentWordArray.join('&nbsp;&nbsp;');
-		 for (i in gameObject.wordBankObject) {
+	 //display text for word
+	//run the object function for current word
+	//turn it to dashes with the object function
+	//display it to the document with the object function
+	// function getCurrentWord(array) {
+	// 	turn = 0;
+	// 	var arr = [];
+	// 	var idx = gameObject.gameWords.indexOf(gameObject.gameWords[turn]);
+	// 	arr.push(gameObject.gameWords[idx]);
+	// 	console.log(arr);
+	// 	var text = arr.toString();
+	// 	var array = text.split("");
+	// 	console.log(array);
+	// 	return array;
+		// currentWord.push(gameObject.gameWords[arr]);
+		// console.log(currentWord);
+		// return currentWord
+	//}
 
-		 	if (currentWordString === gameObject.wordBankObject[i].word) {
-		 		document.getElementById("region").innerHTML = "Region: " + gameObject.wordBankObject[i].region;
-		 		document.getElementById("hint").innerHTML = "Hint: " + gameObject.wordBankObject[i].description;
-		 		document.getElementById("current-photo").src = gameObject.wordBankObject[i].image;
-		 	}
-		 }
+	// function getCurrentWord() {
+	// 	// spaces = " ";
+	// 	// dash = "_";
+	// 	//hyphen = "-";
+	// 	currentWord = [];
+	// 	turn = 0;
+	// 	var idx = gameObject.gameWords.indexOf(gameObject.gameWords[turn]);
+	// 	console.log(idx);
+	// 	currentWord.push(gameObject.gameWords[idx]);
+	// 	console.log(currentWord);
+	// 	var currentWordString = currentWord.toString();
+	// 	console.log(currentWordString);
+	// 	var currentWordArray = currentWordString.split("");
+	// 	console.log(currentWordArray);
+	// 	for (i in gameObject.wordBankObject) {
 
+	// 	 	if (currentWordString === gameObject.wordBankObject[i].word) {
+	// 	 		document.getElementById("region").innerHTML = "Region: " + gameObject.wordBankObject[i].region;
+	// 	 		document.getElementById("hint").innerHTML = "Hint: " + gameObject.wordBankObject[i].description;
+	// 	 		document.getElementById("current-photo").src = gameObject.wordBankObject[i].image;
+	// 	 	}
+	// 	 };
+	// 	return currentWordArray;
+	// }
+		//this gets mutated below to dashes, and it also only exists during the current function. 
 
-	};
-	//var wordToGuess = gameObject.getCurrentWord(gameObject.gameWords);
+		//rename to dashArray
+		//define dash outside of the function. make the if statement the function
+	// function dashArray() {
+	// 	spaces = " ";
+	// 	dash = "_";
+	// 	dashWord = [];
+	// 	turn = 0;
+	// 	var idx = gameObject.gameWords.indexOf(gameObject.gameWords[turn]);
+	// 	dashWord.push(gameObject.gameWords[idx]);
+	// 	var dashWordString = dashWord.toString();
+	// 	var dashArray = dashWordString.split("");
+	// 	console.log(dashArray);
+	// 	for (i in dashArray) {
+	// 	 	if (dashArray[i] !== spaces) {//if the letter is not a space
+	// 	 		dashArray[i] = dash;
+	// 	 	} else if (dashArray[i] === spaces) {
+	// 	 		dashArray[i] = spaces;
+	// 	 	}
+	// 	}
+	// 	console.log(dashArray);
+	// 	document.getElementById("neighborhood-name").innerHTML = dashArray.join('&nbsp;&nbsp;');
+		
+	// }
+	// 	dashArray = currentWordString.split("");
+	// 	console.log(dashArray);
+	// 	for (i in dashArray) {
+	// 	 	if (dashArray[i] !== spaces) {//if the letter is not a space
+	// 	 		console.log(true);
+	// 	 		dashArray[i] = dash;
+	// 	 		console.log(dashArray);
+	// 	 	} else if (dashArray[i] === spaces) {
+	// 	 		console.log(false);
+	// 	 		dashArray[i] = spaces;
+	// 	 		console.log(dashArray);
+	// 	 	}
+	// 	 }
+	// 	 document.getElementById("neighborhood-name").innerHTML = dashArray.join('&nbsp;&nbsp;');
+		 
+	// 	 //either make a function, or declare this with the variables at the top. it's basically it's own function. 
+		
+		// for (i in gameObject.wordBankObject) {
 
+		//  	if (currentWordString === gameObject.wordBankObject[i].word) {
+		//  		document.getElementById("region").innerHTML = "Region: " + gameObject.wordBankObject[i].region;
+		//  		document.getElementById("hint").innerHTML = "Hint: " + gameObject.wordBankObject[i].description;
+		//  		document.getElementById("current-photo").src = gameObject.wordBankObject[i].image;
+		//  	}
+		//  }
 
-	gameWordsDashes = [];
-	// gameWordsDashes : function () {
+	// 	 //store the actual current word here, or do it in the object;
+	// };
+	// //listen for key strokes
+	document.onkeyup = function(event) {
+		//when key strokes are entered:
+		uniqueGuesses = {};
+		//log guesses to the document
+		var userGuess = event.keyCode || event.which
+		console.log(userGuess);
+		//display playerGuess : [],
+		if (userGuess > 64 && userGuess < 91) {
+			var guesses = String.fromCharCode(userGuess);
+			guessesBank.push(guesses);//logs all valid key codes to guesses Array
+			for (var i = 0; i < guessesBank.length; i++) {//https://stackoverflow.com/questions/15052702/count-unique-elements-in-array-without-sorting
+				uniqueGuesses[guessesBank[i]] = 1 + (uniqueGuesses[guessesBank[i]] || 0);//logs unique object name for each guess
+			} 
+		} else if (userGuess < 64 || userGuess > 91) {
+				return document.getElementById("error").innerHTML = "Type another letter to continue!";
+			};
+		console.log(uniqueGuesses);
+		console.log(Object.keys(uniqueGuesses));
+		var uniqueGuessesKeys = Object.keys(uniqueGuesses);//stores object keys to their own array
+		console.log(uniqueGuessesKeys);
+		document.getElementById("guesses").innerHTML = "Guesses: " + uniqueGuessesKeys;
+		//};
 
-	// },
+		// 	//if uniqueGuessesKeys match currentwordarray, replace uniqueGuessesKey string in dash array at the matching index from the current word
+		// 	function letterMatch() {
+		// 		var currentWordArray = currentWordString.split("");
+		// 		for (var i = 0; i < uniqueGuessesKeys.length; i++) {
+		// 			if (i === currentWordArray[i]) {
+		// 				console.log(i + "matches" + currentWordArray[i]);
+		// 			}
+		// 		}
+		// 	}
+
+		// 	letterMatch();
+		/*findarray - uniquesGuessesKeys has one index. use find index to find the first letter in unique guesses key that
+		matches a letter in the currentWordArray*/
+		for (k = 0, j = 0; k < gameObject.currentWordArray.length; k++, j=uniqueGuessesKeys.length-1) {
+			if (uniqueGuessesKeys[j] === gameObject.currentWordArray[k]) {
+				return console.log("correct guess:" + uniqueGuessesKeys[j] + "equals " + gameObject.currentWordArray[k]);
+			} else {
+				console.log("incorrect guess");
+			};
+		}
+		//currentWordArray.some(letterMatch);
+		// for (var i = 0; i < gameObject.currentWordArray.length; i++) {
+		// 	var playerGuess = uniqueGuessesKeys[i];
+		// 	var correctLetter = gameObject.currentWordArray[i];
+		// 	var idx = gameObject.currentWordArray.indexOf(gameObject.currentWordArray[i]);
+		// 	if (playerGuess === correctLetter) {
+		// 	console.log("correct guess:" + playerGuess + "equals " + correctLetter);
+		// 	} else if (playerGuess !== correctLetter) {
+		// 	console.log("incorrect guess")
+		// 	}
+		// }
+			//should match object keys to current guess
+			//can't read mapArray in for loop for some reason
+			//replace this with a index of function to get the index value to pass to the correct word array
+			
+			// //need to compare against a word array equal to the current word
+			// for (var k = 0, j = 0; k < currentWordArray.length; k++ ,j=uniqueGuessesKeys.length-1) {
+				
+			// 	var  playerGuess = uniqueGuessesKeys[];
+			// 	var correctLetter = gameObject.currentWordArray[k];
+			// 	var idx = currentWordArray.indexOf(currentWordArray[turn]);
+			// 	if (playerGuess === correctLetter) {
+			// 		console.log("correct guess");  
+			// 		//**** .join() function to display the guess 
+			// 		//document.getElementById("neighborhood-name").innerHTML = wordBankArray[0].word[k];
+			// 	} else if (playerGuess !== correctLetter) {
+			// 		guesses--;
+			// 		document.getElementById("guesses").innerHTML = "Guesses: " + guesses;
+			// 	}
+			// }
+		
+	}
+
 }
 
 
-//display text for word
-	//run the object function for current word
-
-	//turn it to dashes with the object function
-	//display it to the documetn with the object function
 
 
-//listen for key strokes
-
-	//when key strokes are entered:
-
-	//log guesses to the document
-	//playerGuess : [],
-	//display correct guesses in place of dashes
 
 //other events
 	//guessLeft--
