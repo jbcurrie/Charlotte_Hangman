@@ -1,3 +1,13 @@
+//Global Variables
+var turn = 0;//this will increase when wins or losses change
+//redefine turn to equal a function. if wordMatch equals true turn++;
+var wins = 0;
+var losses = 0;
+var guessesLeft = 12
+	//if (guesses > 0) {//when key strokes are entered:
+var uniqueGuesses = {};
+var userGuess = "";
+
 var gameObject = {
 	gameWords : [],
 	gameWordsFunction : function () {
@@ -8,9 +18,9 @@ var gameObject = {
 		return gameObject.gameWords;
 	},
 	shuffleWords : function (array) {
-		var i = gameObject.gameWords.length,
-		j = 0
-		temp = [];
+		var i = gameObject.gameWords.length;
+		var j = 0;
+		var temp = [];
 
 		while (i--) {
 			j = Math.floor(Math.random() * (i+1));
@@ -23,8 +33,9 @@ var gameObject = {
 	}, 
 	currentWordArray : [],
 	getCurrentWord : function () {		
-		currentWord = [];
-		turn = 0;
+		var currentWord = [];
+		//don't really want to declare turn again in this function. use the global variable
+		//turn = 0;
 		var idx = gameObject.gameWords.indexOf(gameObject.gameWords[turn]);
 		console.log(idx);
 		currentWord.push(gameObject.gameWords[idx]);
@@ -45,15 +56,15 @@ var gameObject = {
 	},
 	dashArray : [],
 	dashArray : function (){
-		spaces = " ";
-		dash = "_";
-		dashWord = [];
-		turn = 0;
+		var spaces = " ";
+		var dash = "_";
+		var dashWord = [];
+		//don't really want to declare turn again in this function. use the global variable
+		//turn = 0;
 		var idx = gameObject.gameWords.indexOf(gameObject.gameWords[turn]);
 		dashWord.push(gameObject.gameWords[idx]);
 		var dashWordString = dashWord.toString();
 		gameObject.dashArray = dashWordString.split("");
-		console.log(gameObject.dashArray);
 		for (i in gameObject.dashArray) {
 		 	if (gameObject.dashArray[i] !== spaces) {//if the letter is not a space
 		 		gameObject.dashArray[i] = dash;
@@ -176,122 +187,105 @@ var gameObject = {
 						 ]
 }
 
-//when document is loaded run the following functions:
-// window.onload = function () {};
-document.querySelector("body").onload = function start() {
- 	var turn = 0;//this will increase when wins or losses change
- 	//redefine turn to equal a function. if wordMatch equals true turn++;
- 	var wins = 0;
- 	var losses = 0;
- 	var guesses = 12;
- 	var guessesBank = [];
- 	var uniqueGuesses = {};
- 	//var currentWord = getCurrentWord();//an unmutated array of the current word
- 	//var dashArray = currentWordString.split("");
- 	//var dashWord = dashArray();
- 	var uniqueGuessesKeys = [];
- 	//var currentWordString = currentWord.toString();
+//functions (to run when needed)
 
- 	//var currentWordArray = currentWordString.split("");
-
-	console.log(gameObject);
-	//document.getElementById("neighborhood-name").innerHTML = gameObject.wordBankObject[0].word;
-	//gameObject.splitWord();
-	gameObject.gameWordsFunction();
-	gameObject.shuffleWords(gameObject.gameWords);
-	gameObject.getCurrentWord(gameObject.gameWords);
-	gameObject.dashArray();
-
-
-	//rewrite this so that you can get the 
-	document.onkeyup = function(event) {
-		//when key strokes are entered:
-		uniqueGuesses = {};
+		//referred to HW solution; changed to store check guesse under a function to call when document onkeyup triggered;
+	function logGuesses () {
+		var guessesBank = [];
 		//log guesses to the document
-		var userGuess = event.keyCode || event.which
-		console.log(userGuess);
+		//var userGuess = event.keyCode || event.which;
+		//console.log(userGuess);
 		//display playerGuess : [],
-		if (userGuess > 64 && userGuess < 91) {
-			var guesses = String.fromCharCode(userGuess).toUpperCase();
-			guessesBank.push(guesses);//logs all valid key codes to guesses Array
+		
+		if (event.keyCode > 64 && event.keyCode < 91) {
+			//var guesses = String.fromCharCode(userGuess).toUpperCase();
+			guessesBank.push(userGuess);//logs all valid key codes to guesses Array
 			for (var i = 0; i < guessesBank.length; i++) {//https://stackoverflow.com/questions/15052702/count-unique-elements-in-array-without-sorting
 				uniqueGuesses[guessesBank[i]] = 1 + (uniqueGuesses[guessesBank[i]] || 0);//logs unique object name for each guess
 			} 
-		} else if (userGuess < 64 || userGuess > 91) {
+		} else if (event.keyCode < 64 || event.keyCode > 91) {
 				return document.getElementById("error").innerHTML = "Type another letter to continue!";
 			};
 		console.log(uniqueGuesses);
-		console.log(Object.keys(uniqueGuesses));
-		var uniqueGuessesKeys = Object.keys(uniqueGuesses);//stores object keys to their own array
-		console.log(uniqueGuessesKeys);
+		//console.log(Object.keys(uniqueGuesses));
+		uniqueGuessesKeys = Object.keys(uniqueGuesses);//stores object keys to their own array
 		document.getElementById("guesses").innerHTML = "Guesses: " + uniqueGuessesKeys.join('&nbsp;&nbsp;');
-
-
+		console.log(uniqueGuessesKeys);
 		
 		//FROM HW SOLUTION
 		//if keys match redefine dash, then go to the next match
-		// function guessMatch (letter) {
-			var letterInWord = false; 
+	}
 
+	function guessMatch (letter) {
+		var letterInWord = false; 
+		//console.log(letterInWord);
 			for (var i = 0; i < gameObject.dashArray.length; i++) {
-				if (gameObject.currentWordArray[i] === guesses) {
+				if (gameObject.currentWordArray[i] === userGuess) {
 					letterInWord = true;
-					console.log(guesses + "is a match, shows " + letterInWord);
+					console.log(userGuess + " is a match, shows " + letterInWord);
 				}
 			}
 
 			if (letterInWord) {
 				for (var j = 0; j < gameObject.dashArray.length; j++) {
-					if (gameObject.currentWordArray[j] === guesses) {
-						gameObject.dashArray[j] = guesses;
+					if (gameObject.currentWordArray[j] === userGuess) {
+						gameObject.dashArray[j] = userGuess;
 					}
 				}
 				console.log(gameObject.dashArray);
-			} else {
+			} else if (gameObject.currentWordArray[j] !== userGuess) {
+				guessesLeft--;
 				console.log("incorrect guess");
+				
 			}
-		// }
+			document.getElementById("neighborhood-name").innerHTML = gameObject.dashArray.join('&nbsp;&nbsp;');	
+			
 
-			//OR
-
-			// for (k = 0; k < gameObject.currentWordArray.length; k++) {
-			// 	j = k;
-			// 	j=uniqueGuessesKeys.length-1;
-			// 	if (uniqueGuessesKeys[j] === gameObject.currentWordArray[k]) {
-			// 		//function fillGuesses(e,idx,arr) {
-			// 			// the dash array currently displays to the document. the dash array matches the current word array indices
-			// 			var goodGuess = gameObject.currentWordArray.indexOf(gameObject.currentWordArray[k]);
-			// 			//gameObject.dashArray.fill(gameObject.currentWordArray[k],goodGuess);
-			// 			gameObject.dashArray[goodGuess]=gameObject.currentWordArray[goodGuess];
-			// 			if (gameObject.dashArray[goodGuess]!==gameObject.currentWordArray[goodGuess]) {
-			// 				return;
-			// 			} else if (gameObject.dashArray[goodGuess]===gameObject.currentWordArray[goodGuess]) {
-			// 				for (var i = 0; i < gameObject.dashArray.length; i++) {
-			// 					gameObject.dashArray[k]=gameObject.currentWordArray[goodGuess];
-			// 				}
-							
-			// 			}
-
-						document.getElementById("neighborhood-name").innerHTML = gameObject.dashArray.join('&nbsp;&nbsp;');
-						
-					// // }
-					// // gameObject.dashArray.some(fillGuesses);			
-					// //if dashes = -1, return win ++
-					console.log("correct guess:" + guesses + "equals " + gameObject.currentWordArray[j]);
-				// 	// return console.log(gameObject.dashArray.join('&nbsp;&nbsp;'));
-				// } else {
-				// 	console.log("incorrect guess");
-				// };
-			// }
-
-
+			//console.log("correct guess:" + userGuess + "equals " + gameObject.currentWordArray[j]);
 	}
 
-}
+//eachRound function
+	function roundTracker () {
+		//document write guesses, guesses left, dashArray
+		document.getElementById("guesses-left").innerHTML = "Guesses Left: " + guessesLeft;
+		document.getElementById("wins").innerHTML = "Wins: " + wins;
+		document.getElementById("losses").innerHTML = "Losses: " + losses;
+		//if dash array string matches current word string, wins ++
+		if (gameObject.dashArray === gameObject.currentWordArray) {
+			wins++;
+			console.log("player wins");
+			turn++;
+			start();
+		} else if (guessesLeft < 0) {
+			losses--;
+			console.log("player loses");
+			start();
+		}
+	}
 
+//-------------------------------
 
-//other events
-	//guessLeft--
-	//wins++ and alert
-	//losses++ and alert
-	//new word function
+//start game
+
+//when document is loaded run the following functions:
+window.onload = function start() {}
+//document.querySelector("body").onload = 
+//function start() {
+ 	//var guessesLeft = 12;
+ 	//var uniqueGuesses = {};
+ 	//var uniqueGuessesKeys = [];
+	console.log(gameObject);
+	gameObject.gameWordsFunction();
+	gameObject.shuffleWords(gameObject.gameWords);
+	gameObject.getCurrentWord(gameObject.gameWords);
+	gameObject.dashArray();
+	roundTracker();
+	//document key up
+	document.onkeyup = function(event) {
+		userGuess = String.fromCharCode(event.keyCode || event.which).toUpperCase();
+		logGuesses();
+		guessMatch(userGuess);
+		
+	}
+
+//};
