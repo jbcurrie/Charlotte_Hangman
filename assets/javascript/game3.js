@@ -177,6 +177,7 @@ var gameObject = {
 }
 
 //when document is loaded run the following functions:
+// window.onload = function () {};
 document.querySelector("body").onload = function start() {
  	var turn = 0;//this will increase when wins or losses change
  	//redefine turn to equal a function. if wordMatch equals true turn++;
@@ -336,13 +337,36 @@ document.querySelector("body").onload = function start() {
 		// 	letterMatch();
 		/*findarray - uniquesGuessesKeys has one index. use find index to find the first letter in unique guesses key that
 		matches a letter in the currentWordArray*/
-		for (k = 0, j = 0; k < gameObject.currentWordArray.length; k++, j=uniqueGuessesKeys.length-1) {
+
+		for (k = 0; k < gameObject.currentWordArray.length; k++) {
+			j = k;
+			j=uniqueGuessesKeys.length-1;
 			if (uniqueGuessesKeys[j] === gameObject.currentWordArray[k]) {
-				return console.log("correct guess:" + uniqueGuessesKeys[j] + "equals " + gameObject.currentWordArray[k]);
+				//function fillGuesses(e,idx,arr) {
+					// the dash array currently displays to the document. the dash array matches the current word array indices
+					var goodGuess = gameObject.currentWordArray.indexOf(gameObject.currentWordArray[k]);
+					//gameObject.dashArray.fill(gameObject.currentWordArray[k],goodGuess);
+					gameObject.dashArray[goodGuess]=gameObject.currentWordArray[goodGuess];
+						//gameObject.currentWordArray[idx]
+					//splice dash array at good guess
+					//in the dash array, splice the correct letter index with the dash array dash
+					//whatsThis();
+					document.getElementById("neighborhood-name").innerHTML = gameObject.dashArray.join('&nbsp;&nbsp;');
+					return console.log(gameObject.dashArray.join('&nbsp;&nbsp;'));
+				// }
+				// gameObject.dashArray.some(fillGuesses);			
+				//if dashes = -1, return win ++
+				console.log("correct guess:" + uniqueGuessesKeys[j] + "equals " + gameObject.currentWordArray[k]);
 			} else {
 				console.log("incorrect guess");
 			};
 		}
+
+		//if win ++ , then turn ++, which should trigger the next word. 
+
+
+
+
 		//currentWordArray.some(letterMatch);
 		// for (var i = 0; i < gameObject.currentWordArray.length; i++) {
 		// 	var playerGuess = uniqueGuessesKeys[i];
