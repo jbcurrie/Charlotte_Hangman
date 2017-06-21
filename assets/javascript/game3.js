@@ -5,11 +5,12 @@ var wins = 0;
 var losses = 0;
 var guessesLeft = 12
 	//if (guesses > 0) {//when key strokes are entered:
-var uniqueGuesses = {};
 var userGuess = "";
+var uniqueGuesses = {};
+//uniqueGuessesKeys = [];
+
 
 var gameObject = {
-	gameWords : [],
 	gameWordsFunction : function () {
 		for (var i in gameObject.wordBankObject) {
 			gameObject.gameWords.push(gameObject.wordBankObject[i].word);
@@ -31,17 +32,16 @@ var gameObject = {
 		//console.log(gameObject.gameWords);
 		return array;
 	}, 
-	currentWordArray : [],
 	getCurrentWord : function () {		
 		var currentWord = [];
 		//don't really want to declare turn again in this function. use the global variable
 		//turn = 0;
 		var idx = gameObject.gameWords.indexOf(gameObject.gameWords[turn]);
-		console.log(idx);
+		//console.log(idx);
 		currentWord.push(gameObject.gameWords[idx]);
-		console.log(currentWord);
+		//console.log(currentWord);
 		var currentWordString = currentWord.toString();
-		console.log(currentWordString);
+		//console.log(currentWordString);
 		gameObject.currentWordArray = currentWordString.split("");
 		console.log(gameObject.currentWordArray);
 		for (i in gameObject.wordBankObject) {
@@ -54,8 +54,7 @@ var gameObject = {
 		 };
 		return gameObject.currentWordArray;
 	},
-	dashArray : [],
-	dashArray : function (){
+	getDashes : function () {
 		var spaces = " ";
 		var dash = "_";
 		var dashWord = [];
@@ -75,13 +74,16 @@ var gameObject = {
 		console.log(gameObject.dashArray);
 		document.getElementById("neighborhood-name").innerHTML = gameObject.dashArray.join('&nbsp;&nbsp;');
 	},
+	gameWords : [],
+	currentWordArray : [],
+	dashArray : [],
 	wordBankObject : [
 						{region: "South Charlotte", 
-						 description: "Located along Pineville-Matthews Road,  the general area of Charlotte which surrounds the eponymous mixed-use shopping center, apartment community, office complex and medical park which opened in 1989. The shopping center is home to Charlotte's first Wal-Mart store, and the area's name comes from the abundance of trees in the area.", 
+						 description: "Located along Pineville-Matthews Road,  the general area of Charlotte which surrounds the mixed-use shopping center of the same name, apartment community, office complex and medical park which opened in 1989. The shopping center is home to Charlotte's first Wal-Mart store, and the area's name comes from the abundance of trees in the area.", 
 					     word: "THE ARBORETUM", 
 						 image: "assets/images/South.jpg"},
 						{region: "South Charlotte", 
-						 description: "A newer upscale area, along the NC/SC border, with an eponymously titled resort; originally a large hunting tract owned by the Harris family, descendants of former North Carolina Governor Cameron A. Morrison.", 
+						 description: "A newer upscale area, along the NC/SC border, with it's own luxury resort; originally a large hunting tract owned by the Harris family, descendants of former North Carolina Governor Cameron A. Morrison.", 
 					     word: "BALLANTYNE", 
 						 image: "assets/images/South.jpg"},
 						{region: "South Charlotte", 
@@ -93,7 +95,7 @@ var gameObject = {
 					     word: "CHERRY", 
 						 image: "assets/images/South.jpg"},
 						{region: "South Charlotte", 
-						 description: "Centered on the intersection of Randolph and Sharon Amity roads, most likely taking its name from the large eponymously titled shopping center,which was one of Charlotte's first suburban malls.", 
+						 description: "Centered on the intersection of Randolph and Sharon Amity roads, most likely taking its name from the large shopping center,which was one of Charlotte's first suburban malls.", 
 					     word: "COTSWOLD", 
 						 image: "assets/images/South.jpg"},
 						{region: "South Charlotte", 
@@ -113,7 +115,7 @@ var gameObject = {
 					     word: "MYERS PARK", 
 						 image: "assets/images/South.jpg"},
 						{region: "South Charlotte", 
-						 description: "A small edge city centered on the intersection of Sharon Road and Fairview Road. It includes the nearby neighborhoods of Morrocroft and Foxcroft. Its name is derived from the upscale eponymously titled mall, which opened on February 12, 1970. ", 
+						 description: "A small edge city centered on the intersection of Sharon Road and Fairview Road. It includes the nearby neighborhoods of Morrocroft and Foxcroft. Its name is derived from its upscale mall, which opened on February 12, 1970. ", 
 					     word: "SOUTHPARK", 
 						 image: "assets/images/South.jpg"},
 						{region: "West Charlotte", 
@@ -157,7 +159,7 @@ var gameObject = {
 					     word: "UNIVERSITY CITY", 
 						 image: "assets/images/North.jpg"},
 						{region: "East Charlotte", 
-						 description: "Area is named after the former eponymous mall, that was demolished in the 2014", 
+						 description: "Area is named after the former mall that was demolished in the 2014.", 
 					     word: "EASTLAND", 
 						 image: "assets/images/East.jpg"},
 						{region: "East Charlotte", 
@@ -187,6 +189,23 @@ var gameObject = {
 						 ]
 }
 
+function start () {
+	console.log(gameObject);
+	gameObject.gameWordsFunction();
+	gameObject.getCurrentWord();
+	gameObject.getDashes();
+	uniqueGuesses = {};
+	userGuess = "";
+	uniqueGuessesKeys = [];
+	guessesLeft = 12;
+	document.getElementById("guesses-left").innerHTML = "Guesses Left: " + guessesLeft;
+	document.getElementById("wins").innerHTML = "Wins: " + wins;
+	document.getElementById("losses").innerHTML = "Losses: " + losses;
+	document.getElementById("neighborhood-name").innerHTML = gameObject.dashArray.join('&nbsp;&nbsp;');
+	//uniqueGuesses = {};
+	//userGuess = "";
+
+};
 //functions (to run when needed)
 
 		//referred to HW solution; changed to store check guesse under a function to call when document onkeyup triggered;
@@ -200,22 +219,41 @@ var gameObject = {
 		if (event.keyCode > 64 && event.keyCode < 91) {
 			//var guesses = String.fromCharCode(userGuess).toUpperCase();
 			guessesBank.push(userGuess);//logs all valid key codes to guesses Array
-			for (var i = 0; i < guessesBank.length; i++) {//https://stackoverflow.com/questions/15052702/count-unique-elements-in-array-without-sorting
+			//https://stackoverflow.com/questions/15052702/count-unique-elements-in-array-without-sorting
+			for (var i = 0; i < guessesBank.length; i++) {
+				//literally says 1 equals 1 in the console log (or just 1)
 				uniqueGuesses[guessesBank[i]] = 1 + (uniqueGuesses[guessesBank[i]] || 0);//logs unique object name for each guess
 			} 
 		} else if (event.keyCode < 64 || event.keyCode > 91) {
 				return document.getElementById("error").innerHTML = "Type another letter to continue!";
 			};
-		console.log(uniqueGuesses);
-		//console.log(Object.keys(uniqueGuesses));
-		uniqueGuessesKeys = Object.keys(uniqueGuesses);//stores object keys to their own array
+		//stores object keys to their own array
+		var uniqueGuessesKeys = Object.keys(uniqueGuesses);
+		//add a guess back for every guess decreased in the guess match function
+		//problem*** if userGuess is located in more than one location in the array
+		function guessesFix () {
+			
+			for (var j in uniqueGuesses) {
+				if (userGuess === j) {
+					if (uniqueGuesses[j] > 1) {
+						for (var k = 0; k < gameObject.dashArray.length; k++) {
+							if (userGuess !== gameObject.dashArray[k]) {
+								return guessesLeft++;
+							}
+						}
+					}
+				}
+			};
+		};
+		guessesFix();
 		document.getElementById("guesses").innerHTML = "Guesses: " + uniqueGuessesKeys.join('&nbsp;&nbsp;');
 		console.log(uniqueGuessesKeys);
-		
+		if (wins|| losses) {
+			uniqueGuessesKeys = [];
+		};
+	}
 		//FROM HW SOLUTION
 		//if keys match redefine dash, then go to the next match
-	}
-
 	function guessMatch (letter) {
 		var letterInWord = false; 
 		//console.log(letterInWord);
@@ -225,23 +263,17 @@ var gameObject = {
 					console.log(userGuess + " is a match, shows " + letterInWord);
 				}
 			}
-
 			if (letterInWord) {
 				for (var j = 0; j < gameObject.dashArray.length; j++) {
-					if (gameObject.currentWordArray[j] === userGuess) {
+					if (gameObject.currentWordArray[j] === userGuess && guessesLeft > 0) {
 						gameObject.dashArray[j] = userGuess;
 					}
 				}
 				console.log(gameObject.dashArray);
-			} else if (gameObject.currentWordArray[j] !== userGuess) {
-				guessesLeft--;
-				console.log("incorrect guess");
-				
-			}
-			document.getElementById("neighborhood-name").innerHTML = gameObject.dashArray.join('&nbsp;&nbsp;');	
-			
-
-			//console.log("correct guess:" + userGuess + "equals " + gameObject.currentWordArray[j]);
+			} else if (event.keyCode > 64 && event.keyCode < 91) {
+				return guessesLeft--;
+			};
+		document.getElementById("neighborhood-name").innerHTML = gameObject.dashArray.join('&nbsp;&nbsp;');	
 	}
 
 //eachRound function
@@ -251,14 +283,16 @@ var gameObject = {
 		document.getElementById("wins").innerHTML = "Wins: " + wins;
 		document.getElementById("losses").innerHTML = "Losses: " + losses;
 		//if dash array string matches current word string, wins ++
-		if (gameObject.dashArray === gameObject.currentWordArray) {
+		if (gameObject.dashArray.toString() === gameObject.currentWordArray.toString()) {
 			wins++;
 			console.log("player wins");
 			turn++;
+			//gameObject.shuffleWords(gameObject.gameWords);
 			start();
-		} else if (guessesLeft < 0) {
-			losses--;
-			console.log("player loses");
+		} else if (guessesLeft < 1) {
+			losses++;
+			alert("Game Over! Keep Playing?");
+			//gameObject.shuffleWords(gameObject.gameWords);
 			start();
 		}
 	}
@@ -268,23 +302,17 @@ var gameObject = {
 //start game
 
 //when document is loaded run the following functions:
-window.onload = function start() {}
-//document.querySelector("body").onload = 
-//function start() {
- 	//var guessesLeft = 12;
- 	//var uniqueGuesses = {};
- 	//var uniqueGuessesKeys = [];
-	console.log(gameObject);
-	gameObject.gameWordsFunction();
-	gameObject.shuffleWords(gameObject.gameWords);
-	gameObject.getCurrentWord(gameObject.gameWords);
-	gameObject.dashArray();
-	roundTracker();
+window.onload = start();
+//document.querySelector("body").onload=
+gameObject.shuffleWords(gameObject.gameWords);
+//shuffle words once so you can't repeat them
+
 	//document key up
 	document.onkeyup = function(event) {
 		userGuess = String.fromCharCode(event.keyCode || event.which).toUpperCase();
 		logGuesses();
 		guessMatch(userGuess);
+		roundTracker();
 		
 	}
 
