@@ -10,28 +10,52 @@
 	</head>
 		<body> <!--onload="hangmanWord()"-->
 		<div class="container">
-
-		<h1>Charlotte Hangman!</h1>
-
-			<img id="current-photo" src="assets/images/Charlotte-Area-Map.png" alt="Charlotte Map">
-
-			<div id="current-word">
-				<p id="region">Region:</p>
-				<p id="hint">Hint:</p>
-				<p id="neighborhood-name"></p>
-				<p id="guesses">Guesses:</p>
-				<p id="error"></p>
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="page-header text-center">
+							<h1>Charlotte Hangman!</h1>
+					</div>
+				</div>
 			</div>
-			
-			<div id="guesses">
-				<p>Type the letter of your first guess!</p>
-				<input type="text" id="mobile">
-				<p id="guesses-left">Guesses Left:</p>
-				<p id="wins">Wins:</p>
-				<p id="losses">Losses:</p>
+			<div class="row">
+				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+					<img class="img-responsive center-block media-heading img-rounded" id="current-photo" src="assets/images/Charlotte-Area-Map.png" alt="Charlotte Map">
+				</div>
+				<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<div class="panel panel-default">
+								<div class="panel-body text-center">
+									<h4>Type the letter of your next guess!</h4>
+									<p id="guesses-left">Guesses Left:</p>
+									<p id="wins">Wins:</p>
+									<p id="losses">Losses:</p>
+									<input type="text" id="mobile">							
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<div class="panel panel-default">
+								<!--<div class="panel-body text-center">-->	
+									<ul class="list-group text-center">
+										<li class="list-group-item" id="neighborhood-name"></li>
+										<li class="list-group-item" id="guesses"></li>
+										<li class="list-group-item" id="region">Region:</li>
+										<li class="list-group-item" id="hint">Hint:</li>
+										<li class="list-group-item" id="error"></li>
+									</ul>
+								<!-- </div> -->
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-			
 
+			
 			<script src="assets/javascript/game3.js"></script>
 
 		</body>

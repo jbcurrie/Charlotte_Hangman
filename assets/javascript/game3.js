@@ -1,16 +1,12 @@
-//combine the functions that log guesses and match them into one function
-//add the key character condition, and see if you can eliminate any excessive code related ot the uniqueGuesses object
-
 //Global Variables
-var turn = 0;//this will increase when wins or losses change
-//redefine turn to equal a function. if wordMatch equals true turn++;
+
+//this will increase when wins or losses change
+var turn = 0;
 var wins = 0;
 var losses = 0;
 var guessesLeft = 12
-	//if (guesses > 0) {//when key strokes are entered:
 var userGuess = "";
 var uniqueGuesses = {};
-//uniqueGuessesKeys = [];
 
 
 var gameObject = {
@@ -18,7 +14,6 @@ var gameObject = {
 		for (var i in gameObject.wordBankObject) {
 			gameObject.gameWords.push(gameObject.wordBankObject[i].word);
 		}
-		//console.log(gameObject.gameWords);
 		return gameObject.gameWords;
 	},
 	shuffleWords : function (array) {
@@ -32,19 +27,13 @@ var gameObject = {
 			array[i] = array [j];
 			array[j] = temp;
 		}
-		//console.log(gameObject.gameWords);
 		return array;
 	}, 
 	getCurrentWord : function () {		
 		var currentWord = [];
-		//don't really want to declare turn again in this function. use the global variable
-		//turn = 0;
 		var idx = gameObject.gameWords.indexOf(gameObject.gameWords[turn]);
-		//console.log(idx);
 		currentWord.push(gameObject.gameWords[idx]);
-		//console.log(currentWord);
 		var currentWordString = currentWord.toString();
-		//console.log(currentWordString);
 		gameObject.currentWordArray = currentWordString.split("");
 		console.log(gameObject.currentWordArray);
 		for (i in gameObject.wordBankObject) {
@@ -61,14 +50,12 @@ var gameObject = {
 		var spaces = " ";
 		var dash = "_";
 		var dashWord = [];
-		//don't really want to declare turn again in this function. use the global variable
-		//turn = 0;
 		var idx = gameObject.gameWords.indexOf(gameObject.gameWords[turn]);
 		dashWord.push(gameObject.gameWords[idx]);
 		var dashWordString = dashWord.toString();
 		gameObject.dashArray = dashWordString.split("");
 		for (i in gameObject.dashArray) {
-		 	if (gameObject.dashArray[i] !== spaces) {//if the letter is not a space
+		 	if (gameObject.dashArray[i] !== spaces) {
 		 		gameObject.dashArray[i] = dash;
 		 	} else if (gameObject.dashArray[i] === spaces) {
 		 		gameObject.dashArray[i] = spaces;
@@ -205,18 +192,18 @@ function start () {
 	document.getElementById("wins").innerHTML = "Wins: " + wins;
 	document.getElementById("losses").innerHTML = "Losses: " + losses;
 	document.getElementById("neighborhood-name").innerHTML = gameObject.dashArray.join('&nbsp;&nbsp;');
-	//uniqueGuesses = {};
-	//userGuess = "";
+	document.getElementById("guesses").innerHTML = "Guesses: ";
+
 
 };
 //functions (to run when needed)
+
 	//if keys match redefine dash, guessesLeft --,
 	function guessMatch (letter) {
 		var guessesBank = [];
 		var validGuess = false;
 		
 		if (event.keyCode > 64 && event.keyCode < 91) {
-			//var guesses = String.fromCharCode(userGuess).toUpperCase();
 			guessesBank.push(userGuess);//logs all valid key codes to guesses Array
 			//https://stackoverflow.com/questions/15052702/count-unique-elements-in-array-without-sorting
 			for (var k = 0; k < guessesBank.length; k++) {
@@ -225,14 +212,14 @@ function start () {
 				validGuess = true;
 			} 		
 		} else if (event.keyCode < 64 || event.keyCode > 91) {
-				return document.getElementById("error").innerHTML = "Type another letter to continue!";
+					document.getElementById("error").innerHTML = "Type another letter to continue!";
 			};
 			
 		var uniqueGuessesKeys = Object.keys(uniqueGuesses);	
+		document.getElementById("guesses").innerHTML = "Guesses: " + uniqueGuessesKeys.join('&nbsp;&nbsp;');
 		console.log(uniqueGuessesKeys);
 
 		var letterInWord = false; 
-		//console.log(letterInWord);
 			for (var i = 0; i < gameObject.dashArray.length; i++) {
 				if (gameObject.currentWordArray[i] === userGuess) {
 					letterInWord = true;
@@ -252,8 +239,8 @@ function start () {
 				//
 				return guessesLeft--;
 			};
-		document.getElementById("guesses").innerHTML = "Guesses: " + uniqueGuessesKeys.join('&nbsp;&nbsp;');
-		console.log(uniqueGuessesKeys);
+		
+		//console.log(uniqueGuessesKeys);
 		document.getElementById("neighborhood-name").innerHTML = gameObject.dashArray.join('&nbsp;&nbsp;');	
 	}
 
@@ -268,16 +255,14 @@ function start () {
 			wins++;
 			console.log("player wins");
 			turn++;
-			//gameObject.shuffleWords(gameObject.gameWords);
 			start();
 		} else if (guessesLeft < 1) {
 			losses++;
 			alert("Game Over! Keep Playing?");
-			//gameObject.shuffleWords(gameObject.gameWords);
 			start();
 		}
 		if (turn > 27) {
-			alert ("You really know Charlotte!")
+			alert ("You really know Charlotte!");
 		}
 	}
 
@@ -296,10 +281,10 @@ gameObject.shuffleWords(gameObject.gameWords);
 	//document.getElementById("mobile").onkeypress = function(event) {
 
 		userGuess = String.fromCharCode(event.keyCode || event.which).toUpperCase();
-		//logGuesses();
 		guessMatch(userGuess);
 		roundTracker();
 	document.getElementById("mobile").value = " ";
+
 		
 	});
 
