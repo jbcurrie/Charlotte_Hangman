@@ -210,53 +210,7 @@ function start () {
 
 };
 //functions (to run when needed)
-
-		//referred to HW solution; changed to store check guesse under a function to call when document onkeyup triggered;
-	// function logGuesses () {
-	// 	var guessesBank = [];
-	// 	//log guesses to the document
-	// 	//var userGuess = event.keyCode || event.which;
-	// 	//console.log(userGuess);
-	// 	//display playerGuess : [],
-		
-	// 	if (event.keyCode > 64 && event.keyCode < 91) {
-	// 		//var guesses = String.fromCharCode(userGuess).toUpperCase();
-	// 		guessesBank.push(userGuess);//logs all valid key codes to guesses Array
-	// 		//https://stackoverflow.com/questions/15052702/count-unique-elements-in-array-without-sorting
-	// 		for (var i = 0; i < guessesBank.length; i++) {
-	// 			//literally says 1 equals 1 in the console log (or just 1)
-	// 			uniqueGuesses[guessesBank[i]] = 1 + (uniqueGuesses[guessesBank[i]] || 0);//logs unique object name for each guess
-	// 		} 
-	// 	} else if (event.keyCode < 64 || event.keyCode > 91) {
-	// 			return document.getElementById("error").innerHTML = "Type another letter to continue!";
-	// 		};
-	// 	//stores object keys to their own array
-	// 	var uniqueGuessesKeys = Object.keys(uniqueGuesses);
-	// 	//add a guess back for every guess decreased in the guess match function
-	// 	//problem*** if userGuess is located in more than one location in the array
-	// 	function guessesFix () {
-			
-	// 		for (var j in uniqueGuesses) {
-	// 			if (userGuess === j) {
-	// 				if (uniqueGuesses[j] > 1) {
-	// 					for (var k = 0; k < gameObject.dashArray.length; k++) {
-	// 						if (userGuess !== gameObject.dashArray[k]) {
-	// 							return guessesLeft++;
-	// 						}
-	// 					}
-	// 				}
-	// 			}
-	// 		};
-	// 	};
-	// 	guessesFix();
-	// 	document.getElementById("guesses").innerHTML = "Guesses: " + uniqueGuessesKeys.join('&nbsp;&nbsp;');
-	// 	console.log(uniqueGuessesKeys);
-	// 	if (wins|| losses) {
-	// 		uniqueGuessesKeys = [];
-	// 	};
-	// }
-		//FROM HW SOLUTION
-		//if keys match redefine dash, then go to the next match
+	//if keys match redefine dash, guessesLeft --,
 	function guessMatch (letter) {
 		var guessesBank = [];
 		var validGuess = false;
@@ -322,6 +276,9 @@ function start () {
 			//gameObject.shuffleWords(gameObject.gameWords);
 			start();
 		}
+		if (turn > 27) {
+			alert ("You really know Charlotte!")
+		}
 	}
 
 //-------------------------------
@@ -335,12 +292,15 @@ gameObject.shuffleWords(gameObject.gameWords);
 //shuffle words once so you can't repeat them
 
 	//document key up
-	document.onkeyup = function(event) {
+	document.getElementById("mobile").addEventListener("keyup", function(event) {
+	//document.getElementById("mobile").onkeypress = function(event) {
+
 		userGuess = String.fromCharCode(event.keyCode || event.which).toUpperCase();
 		//logGuesses();
 		guessMatch(userGuess);
 		roundTracker();
+	document.getElementById("mobile").value = " ";
 		
-	}
+	});
 
 //};
