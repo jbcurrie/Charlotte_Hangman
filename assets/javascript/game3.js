@@ -7,6 +7,10 @@ var losses = 0;
 var guessesLeft = 12
 var userGuess = "";
 var uniqueGuesses = {};
+//var mySound;
+var myAudio = document.getElementById('myAudio');
+var stopTime = 0;
+
 
 
 var gameObject = {
@@ -188,6 +192,7 @@ function start () {
 	userGuess = "";
 	uniqueGuessesKeys = [];
 	guessesLeft = 12;
+	//mySound = new sound("assets/images/Wasp-Sound.mp3");
 	document.getElementById("guesses-left").innerHTML = "Guesses Left: " + guessesLeft;
 	document.getElementById("wins").innerHTML = "Wins: " + wins;
 	document.getElementById("losses").innerHTML = "Losses: " + losses;
@@ -258,6 +263,8 @@ function start () {
 		//if dash array string matches current word string, wins ++
 		if (gameObject.dashArray.toString() === gameObject.currentWordArray.toString()) {
 			wins++;
+			myAudio.play();
+			//mySound.play();
 			console.log("player wins");
 			turn++;
 			start();
@@ -284,7 +291,7 @@ gameObject.shuffleWords(gameObject.gameWords);
 	//document key up
 	document.getElementById("mobile").addEventListener("keyup", function(event) {
 	//document.getElementById("mobile").onkeypress = function(event) {
-
+		myAudio.pause();
 		userGuess = String.fromCharCode(event.keyCode || event.which).toUpperCase();
 		guessMatch(userGuess);
 		roundTracker();
