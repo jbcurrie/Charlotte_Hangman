@@ -7,7 +7,6 @@ var losses = 0;
 var guessesLeft = 12
 var userGuess = "";
 var uniqueGuesses = {};
-//var mySound;
 var myAudio = document.getElementById('myAudio');
 var stopTime = 0;
 
@@ -39,7 +38,7 @@ var gameObject = {
 		currentWord.push(gameObject.gameWords[idx]);
 		var currentWordString = currentWord.toString();
 		gameObject.currentWordArray = currentWordString.split("");
-		console.log(gameObject.currentWordArray);
+		//console.log(gameObject.currentWordArray);
 		for (i in gameObject.wordBankObject) {
 
 		 	if (currentWordString === gameObject.wordBankObject[i].word) {
@@ -65,7 +64,7 @@ var gameObject = {
 		 		gameObject.dashArray[i] = spaces;
 		 	}
 		}
-		console.log(gameObject.dashArray);
+		//console.log(gameObject.dashArray);
 		document.getElementById("neighborhood-name").innerHTML = gameObject.dashArray.join('&nbsp;&nbsp;');
 	},
 	gameWords : [],
@@ -184,7 +183,7 @@ var gameObject = {
 }
 
 function start () {
-	console.log(gameObject);
+	//console.log(gameObject);
 	gameObject.gameWordsFunction();
 	gameObject.getCurrentWord();
 	gameObject.getDashes();
@@ -192,7 +191,6 @@ function start () {
 	userGuess = "";
 	uniqueGuessesKeys = [];
 	guessesLeft = 12;
-	//mySound = new sound("assets/images/Wasp-Sound.mp3");
 	document.getElementById("guesses-left").innerHTML = "Guesses Left: " + guessesLeft;
 	document.getElementById("wins").innerHTML = "Wins: " + wins;
 	document.getElementById("losses").innerHTML = "Losses: " + losses;
@@ -227,13 +225,13 @@ function start () {
 			
 		var uniqueGuessesKeys = Object.keys(uniqueGuesses);	
 		document.getElementById("guesses").innerHTML = "Guesses: " + uniqueGuessesKeys.join('&nbsp;&nbsp;');
-		console.log(uniqueGuessesKeys);
+		//console.log(uniqueGuessesKeys);
 
 		var letterInWord = false; 
 			for (var i = 0; i < gameObject.dashArray.length; i++) {
 				if (gameObject.currentWordArray[i] === userGuess) {
 					letterInWord = true;
-					console.log(userGuess + " is a match, shows " + letterInWord);
+					//console.log(userGuess + " is a match, shows " + letterInWord);
 				}
 			}
 			if (letterInWord) {
@@ -242,7 +240,7 @@ function start () {
 						gameObject.dashArray[j] = userGuess;
 					}
 				}
-				console.log(gameObject.dashArray);
+			//	console.log(gameObject.dashArray);
 				//gameObject.gameWords.indexOf(gameObject.gameWords[turn]);
 			} else if (validGuess && uniqueGuesses[userGuess] <= 1 && letterInWord === false) {
 				//have access to unique guesses key
@@ -264,8 +262,7 @@ function start () {
 		if (gameObject.dashArray.toString() === gameObject.currentWordArray.toString()) {
 			wins++;
 			myAudio.play();
-			//mySound.play();
-			console.log("player wins");
+		//	console.log("player wins");
 			turn++;
 			start();
 		} else if (guessesLeft < 1) {
