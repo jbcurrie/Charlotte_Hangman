@@ -211,7 +211,7 @@ function start () {
 		var guessesBank = [];
 		var validGuess = false;
 		
-		if (event.keyCode > 64 && event.keyCode < 91) {
+		if (event.key > 64 && event.key < 91) {
 			guessesBank.push(userGuess);//logs all valid key codes to guesses Array
 			//https://stackoverflow.com/questions/15052702/count-unique-elements-in-array-without-sorting
 			for (var k = 0; k < guessesBank.length; k++) {
@@ -219,7 +219,7 @@ function start () {
 				uniqueGuesses[guessesBank[k]] = 1 + (uniqueGuesses[guessesBank[k]] || 0);//logs unique object name for each guess
 				validGuess = true;
 			} 		
-		} else if (event.keyCode < 64 || event.keyCode > 91) {
+		} else if (event.key < 64 || event.key > 91) {
 					document.getElementById("error").innerHTML = "Type another letter to continue!";
 			};
 			
@@ -289,7 +289,7 @@ gameObject.shuffleWords(gameObject.gameWords);
 	document.getElementById("mobile").addEventListener("keyup", function(event) {
 	//document.getElementById("mobile").onkeypress = function(event) {
 		myAudio.pause();
-		userGuess = String.fromCharCode(event.keyCode || event.which).toUpperCase();
+		userGuess = String.fromCharCode(event.key || event.which).toUpperCase();
 		guessMatch(userGuess);
 		roundTracker();
 	document.getElementById("mobile").value = " ";
