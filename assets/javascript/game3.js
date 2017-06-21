@@ -1,3 +1,6 @@
+//combine the functions that log guesses and match them into one function
+//add the key character condition, and see if you can eliminate any excessive code related ot the uniqueGuesses object
+
 //Global Variables
 var turn = 0;//this will increase when wins or losses change
 //redefine turn to equal a function. if wordMatch equals true turn++;
@@ -209,52 +212,71 @@ function start () {
 //functions (to run when needed)
 
 		//referred to HW solution; changed to store check guesse under a function to call when document onkeyup triggered;
-	function logGuesses () {
+	// function logGuesses () {
+	// 	var guessesBank = [];
+	// 	//log guesses to the document
+	// 	//var userGuess = event.keyCode || event.which;
+	// 	//console.log(userGuess);
+	// 	//display playerGuess : [],
+		
+	// 	if (event.keyCode > 64 && event.keyCode < 91) {
+	// 		//var guesses = String.fromCharCode(userGuess).toUpperCase();
+	// 		guessesBank.push(userGuess);//logs all valid key codes to guesses Array
+	// 		//https://stackoverflow.com/questions/15052702/count-unique-elements-in-array-without-sorting
+	// 		for (var i = 0; i < guessesBank.length; i++) {
+	// 			//literally says 1 equals 1 in the console log (or just 1)
+	// 			uniqueGuesses[guessesBank[i]] = 1 + (uniqueGuesses[guessesBank[i]] || 0);//logs unique object name for each guess
+	// 		} 
+	// 	} else if (event.keyCode < 64 || event.keyCode > 91) {
+	// 			return document.getElementById("error").innerHTML = "Type another letter to continue!";
+	// 		};
+	// 	//stores object keys to their own array
+	// 	var uniqueGuessesKeys = Object.keys(uniqueGuesses);
+	// 	//add a guess back for every guess decreased in the guess match function
+	// 	//problem*** if userGuess is located in more than one location in the array
+	// 	function guessesFix () {
+			
+	// 		for (var j in uniqueGuesses) {
+	// 			if (userGuess === j) {
+	// 				if (uniqueGuesses[j] > 1) {
+	// 					for (var k = 0; k < gameObject.dashArray.length; k++) {
+	// 						if (userGuess !== gameObject.dashArray[k]) {
+	// 							return guessesLeft++;
+	// 						}
+	// 					}
+	// 				}
+	// 			}
+	// 		};
+	// 	};
+	// 	guessesFix();
+	// 	document.getElementById("guesses").innerHTML = "Guesses: " + uniqueGuessesKeys.join('&nbsp;&nbsp;');
+	// 	console.log(uniqueGuessesKeys);
+	// 	if (wins|| losses) {
+	// 		uniqueGuessesKeys = [];
+	// 	};
+	// }
+		//FROM HW SOLUTION
+		//if keys match redefine dash, then go to the next match
+	function guessMatch (letter) {
 		var guessesBank = [];
-		//log guesses to the document
-		//var userGuess = event.keyCode || event.which;
-		//console.log(userGuess);
-		//display playerGuess : [],
+		var validGuess = false;
 		
 		if (event.keyCode > 64 && event.keyCode < 91) {
 			//var guesses = String.fromCharCode(userGuess).toUpperCase();
 			guessesBank.push(userGuess);//logs all valid key codes to guesses Array
 			//https://stackoverflow.com/questions/15052702/count-unique-elements-in-array-without-sorting
-			for (var i = 0; i < guessesBank.length; i++) {
+			for (var k = 0; k < guessesBank.length; k++) {
 				//literally says 1 equals 1 in the console log (or just 1)
-				uniqueGuesses[guessesBank[i]] = 1 + (uniqueGuesses[guessesBank[i]] || 0);//logs unique object name for each guess
-			} 
+				uniqueGuesses[guessesBank[k]] = 1 + (uniqueGuesses[guessesBank[k]] || 0);//logs unique object name for each guess
+				validGuess = true;
+			} 		
 		} else if (event.keyCode < 64 || event.keyCode > 91) {
 				return document.getElementById("error").innerHTML = "Type another letter to continue!";
 			};
-		//stores object keys to their own array
-		var uniqueGuessesKeys = Object.keys(uniqueGuesses);
-		//add a guess back for every guess decreased in the guess match function
-		//problem*** if userGuess is located in more than one location in the array
-		function guessesFix () {
 			
-			for (var j in uniqueGuesses) {
-				if (userGuess === j) {
-					if (uniqueGuesses[j] > 1) {
-						for (var k = 0; k < gameObject.dashArray.length; k++) {
-							if (userGuess !== gameObject.dashArray[k]) {
-								return guessesLeft++;
-							}
-						}
-					}
-				}
-			};
-		};
-		guessesFix();
-		document.getElementById("guesses").innerHTML = "Guesses: " + uniqueGuessesKeys.join('&nbsp;&nbsp;');
+		var uniqueGuessesKeys = Object.keys(uniqueGuesses);	
 		console.log(uniqueGuessesKeys);
-		if (wins|| losses) {
-			uniqueGuessesKeys = [];
-		};
-	}
-		//FROM HW SOLUTION
-		//if keys match redefine dash, then go to the next match
-	function guessMatch (letter) {
+
 		var letterInWord = false; 
 		//console.log(letterInWord);
 			for (var i = 0; i < gameObject.dashArray.length; i++) {
@@ -270,9 +292,14 @@ function start () {
 					}
 				}
 				console.log(gameObject.dashArray);
-			} else if (event.keyCode > 64 && event.keyCode < 91) {
+				//gameObject.gameWords.indexOf(gameObject.gameWords[turn]);
+			} else if (validGuess && uniqueGuesses[userGuess] <= 1 && letterInWord === false) {
+				//have access to unique guesses key
+				//
 				return guessesLeft--;
 			};
+		document.getElementById("guesses").innerHTML = "Guesses: " + uniqueGuessesKeys.join('&nbsp;&nbsp;');
+		console.log(uniqueGuessesKeys);
 		document.getElementById("neighborhood-name").innerHTML = gameObject.dashArray.join('&nbsp;&nbsp;');	
 	}
 
@@ -310,7 +337,7 @@ gameObject.shuffleWords(gameObject.gameWords);
 	//document key up
 	document.onkeyup = function(event) {
 		userGuess = String.fromCharCode(event.keyCode || event.which).toUpperCase();
-		logGuesses();
+		//logGuesses();
 		guessMatch(userGuess);
 		roundTracker();
 		
