@@ -1,0 +1,32 @@
+body {
+  /*font-family: 'Playfair Display', serif;*/
+  /*font-family: 'Kaushan Script', cursive;*/
+	/*font-family: 'Lovers Quarrel', cursive;*/
+	/*font-family: 'Niconne', cursive;*/
+	font-family: 'Courgette', cursive;
+	color: #ffffff;
+	/*font-family: 'Homemade Apple', cursive;*/
+}
+
+/*p, li, {
+    font-weight: bold;
+}*/
+#mobile {
+  caret-color: black;
+  color: black;
+}
+.panel {
+	background-color: #514e44;
+}
+
+#hint {
+	font-weight: normal;
+}
+
+/*
+font-family: 'Kaushan Script', cursive;
+font-family: 'Tangerine', cursive;
+font-family: 'Lovers Quarrel', cursive;
+font-family: 'Niconne', cursive;
+font-family: 'Courgette', cursive;
+font-family: 'Homemade Apple', cursive;*/

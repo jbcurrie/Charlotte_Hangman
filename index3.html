@@ -6,6 +6,7 @@
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 		<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+		<link href="https://fonts.googleapis.com/css?family=Courgette|Homemade+Apple|Kaushan+Script|Lovers+Quarrel|Niconne|Playfair+Display|Tangerine" rel="stylesheet">
 		<title>CLT Hangman</title>
 	</head>
 		<body> <!--onload="hangmanWord()"-->
@@ -26,7 +27,7 @@
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div class="panel panel-default">
 								<div class="panel-body text-center">
-									<h4>Type the letter of your next guess!</h4>
+									<p>Type the letter of your next guess!</p>
 									<p id="guesses-left">Guesses Left:</p>
 									<p id="wins">Wins:</p>
 									<p id="losses">Losses:</p>
@@ -41,12 +42,17 @@
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div class="panel panel-default">
 								<!--<div class="panel-body text-center">-->	
-									<ul class="list-group text-center">
-										<li class="list-group-item" id="neighborhood-name"></li>
-										<li class="list-group-item" id="guesses"></li>
-										<li class="list-group-item" id="region">Region:</li>
-										<li class="list-group-item" id="hint">Hint:</li>
-										<li class="list-group-item" id="error"></li>
+									<dl class="dl-horizonal text-center">
+										<dt id="neighborhood-name">
+										</dt>
+										<dd></dd>
+										<dt id="guesses"></dt>
+										<dd></dd>
+										<dt>Region:</dt>
+										<dd id="region"></dd>
+										<dt>Hint:</dt>
+										<dd><span id="hint"></span></dd>
+										<dt id="error"></dt>
 									</ul>
 								<!-- </div> -->
 							</div>

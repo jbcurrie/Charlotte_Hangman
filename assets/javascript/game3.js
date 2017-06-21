@@ -39,8 +39,8 @@ var gameObject = {
 		for (i in gameObject.wordBankObject) {
 
 		 	if (currentWordString === gameObject.wordBankObject[i].word) {
-		 		document.getElementById("region").innerHTML = "Region: " + gameObject.wordBankObject[i].region;
-		 		document.getElementById("hint").innerHTML = "Hint: " + gameObject.wordBankObject[i].description;
+		 		document.getElementById("region").innerHTML = gameObject.wordBankObject[i].region;
+		 		document.getElementById("hint").innerHTML =  gameObject.wordBankObject[i].description;
 		 		document.getElementById("current-photo").src = gameObject.wordBankObject[i].image;
 		 	}
 		 };
@@ -192,9 +192,12 @@ function start () {
 	document.getElementById("wins").innerHTML = "Wins: " + wins;
 	document.getElementById("losses").innerHTML = "Losses: " + losses;
 	document.getElementById("neighborhood-name").innerHTML = gameObject.dashArray.join('&nbsp;&nbsp;');
+	document.getElementById("neighborhood-name").style.fontWeight="bolder";
 	document.getElementById("guesses").innerHTML = "Guesses: ";
+	document.getElementById("guesses").style.fontFamily = "inherit";
+	document.getElementById("guesses").style.fontWeight="bold";
 	document.querySelector("body").style.backgroundImage="url(assets/images/Charlotte_background.png)";
-	document.querySelector("h1").style.backgroundColor="#ffffff";
+	document.querySelector("h1").style.backgroundColor="#1D1160";
 
 
 };
