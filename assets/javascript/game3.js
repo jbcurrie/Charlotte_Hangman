@@ -193,6 +193,8 @@ function start () {
 	document.getElementById("losses").innerHTML = "Losses: " + losses;
 	document.getElementById("neighborhood-name").innerHTML = gameObject.dashArray.join('&nbsp;&nbsp;');
 	document.getElementById("guesses").innerHTML = "Guesses: ";
+	document.querySelector("body").style.backgroundImage="url(assets/images/Charlotte_background.png)";
+	document.querySelector("h1").style.backgroundColor="#ffffff";
 
 
 };
