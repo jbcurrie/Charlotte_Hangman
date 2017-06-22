@@ -220,9 +220,13 @@ function start () {
 				validGuess = true;
 			} 		
 		} else if (event.keyCode < 64 || event.keyCode > 91) {
-					document.getElementById("error").innerHTML = "Type another letter to continue!";
+			// var errorTimeout = setTimeout(function(){
+       			document.getElementById("error").innerHTML = "Type another letter to continue!";
+   //   			 }, 000);
+			// 		//document.getElementById("error").innerHTML = "Type another letter to continue!";
+			// };
+			// var hideError = clearTimeout(errorTimeout);
 			};
-			
 		var uniqueGuessesKeys = Object.keys(uniqueGuesses);	
 		document.getElementById("guesses").innerHTML = "Guesses: " + uniqueGuessesKeys.join('&nbsp;&nbsp;');
 		//console.log(uniqueGuessesKeys);
@@ -289,7 +293,7 @@ gameObject.shuffleWords(gameObject.gameWords);
 	document.getElementById("mobile").addEventListener("keyup", function(event) {
 	//document.getElementById("mobile").onkeypress = function(event) {
 		myAudio.pause();
-		userGuess = String.fromCharCode(event.key || event.which).toUpperCase();
+		userGuess = String.fromCharCode(event.keyCode || event.which).toUpperCase();
 		guessMatch(userGuess);
 		roundTracker();
 	document.getElementById("mobile").value = " ";
