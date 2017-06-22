@@ -80,7 +80,7 @@ var gameObject = {
 					     word: "BALLANTYNE", 
 						 image: "assets/images/South.jpg"},
 						{region: "South Charlotte", 
-						 description: "Centered on the intersection of Ardrey Kell and Rea roads, located in between the Arboretum and Ballantyne neighborhoods", 
+						 description: "Centered on the intersection of Ardrey Kell and Rea roads, located in between the Arboretum and Ballantyne neighborhoods.", 
 					     word: "BLAKENEY", 
 						 image: "assets/images/South.jpg"},
 						{region: "South Charlotte", 
@@ -92,7 +92,7 @@ var gameObject = {
 					     word: "COTSWOLD", 
 						 image: "assets/images/South.jpg"},
 						{region: "South Charlotte", 
-						 description: "A historic streetcar suburb of largely craftsman-style bungalows located directly South of uptown", 
+						 description: "A historic streetcar suburb of largely craftsman-style bungalows located directly South of uptown.", 
 					     word: "DILWORTH", 
 						 image: "assets/images/South.jpg"},
 						{region: "South Charlotte", 
@@ -104,7 +104,7 @@ var gameObject = {
 					     word: "SOUTH END", 
 						 image: "assets/images/South.jpg"},
 						{region: "South Charlotte", 
-						 description: "A wealthy master-planned neighborhood from the early 20th century characterized by its curving streets and mature oaks", 
+						 description: "A wealthy master-planned neighborhood from the early 20th century characterized by its curving streets and mature oaks.", 
 					     word: "MYERS PARK", 
 						 image: "assets/images/South.jpg"},
 						{region: "South Charlotte", 
@@ -116,7 +116,7 @@ var gameObject = {
 					     word: "BERRYHILL", 
 						 image: "assets/images/West.jpg"},
 						{region: "West Charlotte", 
-						 description: "In west Charlotte along Beatties Ford Rd, is a historically African-American neighborhood surrounding Johnson C. Smith University", 
+						 description: "In west Charlotte along Beatties Ford Rd, is a historically African-American neighborhood surrounding Johnson C. Smith University.", 
 					     word: "BIDDLEVILLE", 
 						 image: "assets/images/West.jpg"},
 						{region: "West Charlotte", 
@@ -124,15 +124,15 @@ var gameObject = {
 					     word: "CAMP GREENE", 
 						 image: "assets/images/West.jpg"},
 						{region: "West Charlotte", 
-						 description: "A Tank town, located in western Mecklenburg County bordering Gaston County; derives its name from the small creek bearing the same name", 
+						 description: "A Tank town, located in western Mecklenburg County bordering Gaston County; derives its name from the small creek bearing the same name.", 
 					     word: "PAW CREEK", 
 						 image: "assets/images/West.jpg"},
 						{region: "West Charlotte", 
-						 description: "A historic streetcar suburb north of Biddleville named in honor of a revered African-American educator", 
+						 description: "A historic streetcar suburb north of Biddleville named in honor of a revered African-American educator.", 
 					     word: "WASHINGTON HEIGHTS", 
 						 image: "assets/images/West.jpg"},
 						{region: "West Charlotte", 
-						 description: "An original streetcar suburb mainly developed in 1920's by E.C. Griffith. It is a historically registered neighborhood adjacent to uptown Charlotte", 
+						 description: "An original streetcar suburb mainly developed in 1920's by E.C. Griffith. It is a historically registered neighborhood adjacent to uptown Charlotte.", 
 					     word: "WESLEY HEIGHTS", 
 						 image: "assets/images/West.jpg"},
 						{region: "North Charlotte", 
@@ -148,11 +148,11 @@ var gameObject = {
 					     word: "NODA", 
 						 image: "assets/images/North.jpg"},
 						{region: "North Charlotte", 
-						 description: "The portion of Charlotte in the extreme northeast around UNC Charlotte; home to a large research park, a university, PNC Music Pavillion, and IKEA", 
+						 description: "The portion of Charlotte in the extreme northeast around UNC Charlotte; home to a large research park, a university, PNC Music Pavillion, and IKEA.", 
 					     word: "UNIVERSITY CITY", 
 						 image: "assets/images/North.jpg"},
 						{region: "East Charlotte", 
-						 description: "Area is named after the former mall that was demolished in the 2014.", 
+						 description: "Area is named after the former mall that was demolished in the 2014; site of the Charlotte Open Air Market.", 
 					     word: "EASTLAND", 
 						 image: "assets/images/East.jpg"},
 						{region: "East Charlotte", 
@@ -168,7 +168,7 @@ var gameObject = {
 					     word: "FIRST WARD", 
 						 image: "assets/images/Center.jpg"},
 						{region: "Center City", 
-						 description: "Ward, formerly known as Brooklyn, was a traditionally African-American neighborhood that was converted in the mid-twentieth century into a city and county government office center in efforts to revitalize the area. ", 
+						 description: "Ward, formerly known as Brooklyn, was a traditionally African-American neighborhood that was converted in the mid-twentieth century into a city and county government office center as part of an urban renewal policy. ", 
 					     word: "SECOND WARD", 
 						 image: "assets/images/Center.jpg"},
 						{region: "Center City", 
@@ -176,11 +176,12 @@ var gameObject = {
 					     word: "THIRD WARD", 
 						 image: "assets/images/Center.jpg"},
 						{region: "Center City", 
-						 description: "Parts of this ward fall within a registered historic district as one of the few neighborhoods of single-family homes left within the I-277 loop.", 
+						 description: "Parts of this ward fall within a registered historic district; one of the few neighborhoods of single-family homes left within the I-277 loop.", 
 					     word: "FOURTH WARD", 
 						 image: "assets/images/Center.jpg"} 
 						 ]
 }
+
 
 function start () {
 	//console.log(gameObject);
@@ -201,8 +202,6 @@ function start () {
 	document.getElementById("guesses").style.fontWeight="bold";
 	document.querySelector("body").style.backgroundImage="url(assets/images/Charlotte_background.png)";
 	document.querySelector("h1").style.backgroundColor="#1D1160";
-
-
 };
 //functions (to run when needed)
 
@@ -212,6 +211,7 @@ function start () {
 		var validGuess = false;
 		
 		if (event.keyCode > 64 && event.keyCode < 91) {
+			document.getElementById("error").innerHTML = "";
 			guessesBank.push(userGuess);//logs all valid key codes to guesses Array
 			//https://stackoverflow.com/questions/15052702/count-unique-elements-in-array-without-sorting
 			for (var k = 0; k < guessesBank.length; k++) {
@@ -220,12 +220,7 @@ function start () {
 				validGuess = true;
 			} 		
 		} else if (event.keyCode < 64 || event.keyCode > 91) {
-			// var errorTimeout = setTimeout(function(){
        			document.getElementById("error").innerHTML = "Type another letter to continue!";
-   //   			 }, 000);
-			// 		//document.getElementById("error").innerHTML = "Type another letter to continue!";
-			// };
-			// var hideError = clearTimeout(errorTimeout);
 			};
 		var uniqueGuessesKeys = Object.keys(uniqueGuesses);	
 		document.getElementById("guesses").innerHTML = "Guesses: " + uniqueGuessesKeys.join('&nbsp;&nbsp;');
@@ -271,11 +266,11 @@ function start () {
 			start();
 		} else if (guessesLeft < 1) {
 			losses++;
-			alert("Game Over! Keep Playing?");
 			start();
 		}
 		if (turn > 27) {
-			alert ("You really know Charlotte!");
+			alert ("YOU REALLY KNOW CHARLOTTE!");
+			start();
 		}
 	}
 
@@ -286,7 +281,7 @@ function start () {
 //when document is loaded run the following functions:
 window.onload = start();
 //document.querySelector("body").onload=
-gameObject.shuffleWords(gameObject.gameWords);
+window.onload = gameObject.shuffleWords(gameObject.gameWords);
 //shuffle words once so you can't repeat them
 
 	//document key up
