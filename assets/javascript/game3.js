@@ -285,7 +285,7 @@ gameObject.shuffleWords(gameObject.gameWords);
 //shuffle words once so you can't repeat them
 
 	//document key up
-	document.getElementById("mobile").addEventListener("keypress", function(event) {
+	document.getElementById("mobile").addEventListener("keyup", function(event) {
 	//document.getElementById("mobile").onkeypress = function(event) {
 		myAudio.pause();
 		userGuess = String.fromCharCode(event.keyCode || event.which || event.charCode).toUpperCase();
