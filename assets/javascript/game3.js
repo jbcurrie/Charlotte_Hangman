@@ -281,16 +281,17 @@ function start () {
 //when document is loaded run the following functions:
 window.onload = start();
 //document.querySelector("body").onload=
-window.onload = gameObject.shuffleWords(gameObject.gameWords);
+gameObject.shuffleWords(gameObject.gameWords);
 //shuffle words once so you can't repeat them
 
 	//document key up
-	document.getElementById("mobile").addEventListener("keyup", function(event) {
+	document.getElementById("mobile").addEventListener("keypress", function(event) {
 	//document.getElementById("mobile").onkeypress = function(event) {
 		myAudio.pause();
 		userGuess = String.fromCharCode(event.keyCode || event.which || event.charCode).toUpperCase();
 		guessMatch(userGuess);
 		roundTracker();
+
 	document.getElementById("mobile").value = " ";
 
 		
