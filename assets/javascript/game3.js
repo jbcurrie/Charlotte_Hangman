@@ -288,7 +288,7 @@ window.onload = gameObject.shuffleWords(gameObject.gameWords);
 	document.getElementById("mobile").addEventListener("keyup", function(event) {
 	//document.getElementById("mobile").onkeypress = function(event) {
 		myAudio.pause();
-		userGuess = String.fromCharCode(event.key || event.which || event.keyCode).toUpperCase();
+		userGuess = String.fromCharCode(event.keyCode || event.which || event.charCode).toUpperCase();
 		guessMatch(userGuess);
 		roundTracker();
 	document.getElementById("mobile").value = " ";
