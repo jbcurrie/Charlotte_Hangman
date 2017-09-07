@@ -1,6 +1,7 @@
 //Global Variables
-
 //this will increase when wins or losses change
+//TO DO: store all global vars in functions to improve modularity
+//front end redesign for more mobile compatibility
 var turn = 0;
 var wins = 0;
 var losses = 0;
@@ -9,8 +10,6 @@ var userGuess = "";
 var uniqueGuesses = {};
 var myAudio = document.getElementById('myAudio');
 var stopTime = 0;
-
-
 
 var gameObject = {
 	gameWordsFunction : function () {
@@ -185,13 +184,16 @@ var gameObject = {
 
 function start (bool,correctWord) {
 	//console.log(gameObject);
-	gameObject.gameWordsFunction();
+	if (turn === 0) {
+		gameObject.gameWordsFunction();
+	}
 	gameObject.getCurrentWord();
 	gameObject.getDashes();
 	uniqueGuesses = {};
 	userGuess = "";
 	uniqueGuessesKeys = [];
 	guessesLeft = 12;
+	document.getElementById("turn").innerHTML = `Round: ${turn}/27`;
 	document.getElementById("guesses-left").innerHTML = "Guesses Left: " + guessesLeft;
 	document.getElementById("wins").innerHTML = "Wins: " + wins;
 	document.getElementById("losses").innerHTML = "Losses: " + losses;
@@ -202,6 +204,8 @@ function start (bool,correctWord) {
 	document.getElementById("guesses").style.fontWeight="bold";
 	document.querySelector("body").style.backgroundImage="url(assets/images/Charlotte_background.png)";
 	document.querySelector("h1").style.backgroundColor="#1D1160";
+	document.getElementById("msgField").style.color = "#ffffff";
+	document.getElementById("guesses-left").style.color = "#ffffff";
 	//if bool is win show win message, loss, end of game with option to play again. 
 	//document create  temp message that clears on button click
 	if (bool === true) {
@@ -210,92 +214,83 @@ function start (bool,correctWord) {
 		document.getElementById("msgField").innerHTML = `You lost that round! The correct answer was ${correctWord}.`;
 	} else {
 		if (turn < 27) {
-		document.getElementById("msgField").innerHTML = `Type the letter of your next guess.`;	
-		} else {
-		document.getElementById("msgField").innerHTML = `You really know Charlote! Play again?`;
-		//if they type y, start game. 
+			document.getElementById("msgField").innerHTML = `Type the letter of your next guess.`;	
+		} else if (turn = 27) {
+			document.getElementById("msgField").innerHTML = `You really know Charlote! Play again? Press any key to continue`;
+			document.getElementById("msgField").style.color = "#1D1160";
+			turn=0;
+			wins=0;
+			losses=0;
+			gameObject.shuffleWords(gameObject.gameWords);
+			gameObject.getCurrentWord();
+			gameObject.getDashes();
 		}
 	}
 };
-//functions (to run when needed)
 
-	//if keys match redefine dash, guessesLeft --,
-	function guessMatch(userGuess) {
-		var guessesBank = [];
-		var validGuess = false;
-		//if the key passes the regex test, push it to the bank else, type another letter
-		var patt = /^[a-zA-Z]+/;
-		var test = patt.test(userGuess);
-		console.log(`${userGuess} is ${test}`)
-		if (test === true) {
-			document.getElementById("error").innerHTML = "";
-			guessesBank.push(userGuess);//logs all valid key codes to guesses Array
-			//https://stackoverflow.com/questions/15052702/count-unique-elements-in-array-without-sorting
-			for (var k = 0; k < guessesBank.length; k++) {
-				//literally says 1 equals 1 in the console log (or just 1)
-				uniqueGuesses[guessesBank[k]] = 1 + (uniqueGuesses[guessesBank[k]] || 0);//logs unique object name for each guess
-				validGuess = true;
-			} 	
-		} else if (test === false) {
-			document.getElementById("error").innerHTML = "Type another letter to continue!";
-		} else {
-			console.log("something went awry");
+function guessMatch(userGuess) {
+	var guessesBank = [];
+	var validGuess = false;
+	//if the key passes the regex test, push it to the bank else, type another letter
+	var patt = /^[a-zA-Z]+/;
+	var test = patt.test(userGuess);
+	console.log(`${userGuess} is ${test}`)
+	if (test === true) {
+		document.getElementById("error").innerHTML = "";
+		guessesBank.push(userGuess);//logs all valid key codes to guesses Array
+		//https://stackoverflow.com/questions/15052702/count-unique-elements-in-array-without-sorting
+		for (var k = 0; k < guessesBank.length; k++) {
+			//literally says 1 equals 1 in the console log (or just 1)
+			uniqueGuesses[guessesBank[k]] = 1 + (uniqueGuesses[guessesBank[k]] || 0);//logs unique object name for each guess
+			validGuess = true;
+		} 	
+	} else if (test === false) {
+		document.getElementById("error").innerHTML = "Type another letter to continue!";
+	} else {
+		// console.log("something went awry");
+	}
+	var uniqueGuessesKeys = Object.keys(uniqueGuesses);	
+	document.getElementById("guesses").innerHTML = "Guesses: " + uniqueGuessesKeys.join('&nbsp;&nbsp;');
+	//console.log(uniqueGuessesKeys);
+
+	var letterInWord = false; 
+		for (var i = 0; i < gameObject.dashArray.length; i++) {
+			if (gameObject.currentWordArray[i] === userGuess) {
+				letterInWord = true;
+				//console.log(userGuess + " is a match, shows " + letterInWord);
+			}
 		}
-		// if (event.keyCode > 64 && event.keyCode < 91) {
-		// 	document.getElementById("error").innerHTML = "";
-		// 	guessesBank.push(userGuess);//logs all valid key codes to guesses Array
-		// 	//https://stackoverflow.com/questions/15052702/count-unique-elements-in-array-without-sorting
-		// 	for (var k = 0; k < guessesBank.length; k++) {
-		// 		//literally says 1 equals 1 in the console log (or just 1)
-		// 		uniqueGuesses[guessesBank[k]] = 1 + (uniqueGuesses[guessesBank[k]] || 0);//logs unique object name for each guess
-		// 		validGuess = true;
-		// 	} 		
-		// } else if (event.keyCode < 64 || event.keyCode > 91) {
-       	// 		document.getElementById("error").innerHTML = "Type another letter to continue!";
-		// };
-		var uniqueGuessesKeys = Object.keys(uniqueGuesses);	
-		document.getElementById("guesses").innerHTML = "Guesses: " + uniqueGuessesKeys.join('&nbsp;&nbsp;');
-		//console.log(uniqueGuessesKeys);
-
-		var letterInWord = false; 
-			for (var i = 0; i < gameObject.dashArray.length; i++) {
-				if (gameObject.currentWordArray[i] === userGuess) {
-					letterInWord = true;
-					//console.log(userGuess + " is a match, shows " + letterInWord);
+		if (letterInWord) {
+			for (var j = 0; j < gameObject.dashArray.length; j++) {
+				if (gameObject.currentWordArray[j] === userGuess && guessesLeft > 0) {
+					gameObject.dashArray[j] = userGuess;
 				}
 			}
-			if (letterInWord) {
-				for (var j = 0; j < gameObject.dashArray.length; j++) {
-					if (gameObject.currentWordArray[j] === userGuess && guessesLeft > 0) {
-						gameObject.dashArray[j] = userGuess;
-					}
-				}
-			//	console.log(gameObject.dashArray);
-				//gameObject.gameWords.indexOf(gameObject.gameWords[turn]);
-			} else if (validGuess && uniqueGuesses[userGuess] <= 1 && letterInWord === false) {
-				//have access to unique guesses key
-				//
-				return guessesLeft--;
-			};
-		
-		//console.log(uniqueGuessesKeys);
-		document.getElementById("neighborhood-name").innerHTML = gameObject.dashArray.join('&nbsp;&nbsp;');	
-	}
+		//	console.log(gameObject.dashArray);
+		} else if (validGuess && uniqueGuesses[userGuess] <= 1 && letterInWord === false) {
+	
+			return guessesLeft--;
+		};
+	
+	//console.log(uniqueGuessesKeys);
+	document.getElementById("neighborhood-name").innerHTML = gameObject.dashArray.join('&nbsp;&nbsp;');	
+}
 
 //eachRound function
 	function roundTracker () {
 		var bool;
 		var correctWordArr = gameObject.currentWordArray.toString();
 		var correctWord = gameObject.currentWordArray.join('');
-		//document write guesses, guesses left, dashArray
 		document.getElementById("guesses-left").innerHTML = "Guesses Left: " + guessesLeft;
 		document.getElementById("wins").innerHTML = "Wins: " + wins;
 		document.getElementById("losses").innerHTML = "Losses: " + losses;
 		//if dash array string matches current word string, wins ++
+		if (guessesLeft < 6) {
+			document.getElementById("guesses-left").style.color = "#ff0000";
+		}
 		if (gameObject.dashArray.toString() === correctWordArr) {
 			wins++;
 			myAudio.play();
-			// alert("you won that round")
 		//	console.log("player wins");
 			turn++;
 			bool = true;
@@ -304,25 +299,21 @@ function start (bool,correctWord) {
 			losses++;
 			bool = false;
 			turn++;
-			// alert("you lost that round")
 			start(bool,correctWord);
 		}
-		if (turn > 27) {
-			// alert ("YOU REALLY KNOW CHARLOTTE!");
+		if (turn === 27) {
+			bool = null;
 			start(bool,correctWord);
 		}
 	}
 
 //-------------------------------
-
 //start game
-
 //when document is loaded run the following functions:
 window.onload = start();
-//document.querySelector("body").onload=
+
 gameObject.shuffleWords(gameObject.gameWords);
 //shuffle words once so you can't repeat them
-
 	//document key up
 	document.getElementById("mobile").addEventListener("input", function(event) { 
 		myAudio.pause();
@@ -335,14 +326,5 @@ gameObject.shuffleWords(gameObject.gameWords);
 	});
 	// document.getElementById("mobile").addEventListener("keyup", function(event) {
 	// //document.getElementById("mobile").onkeypress = function(event) {
-	// 	myAudio.pause();
 	// 	userGuess = String.fromCharCode(event.keyCode || event.which || event.charCode).toUpperCase();
-	// 	console.log(event);
-	// 	console.log(`keyCode:${event.keyCode} which:${event.which} charCode:${event.charCode} event.key:${event.key}`)
-	// 	guessMatch(userGuess);
-	// 	roundTracker();
-	// 	//do a form reset instead
-	// 	document.getElementById("mobile").value = " ";
 	// });
-
-//};
