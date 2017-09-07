@@ -216,7 +216,7 @@ function start (bool,correctWord) {
 		if (turn < 27) {
 			document.getElementById("msgField").innerHTML = `Type the letter of your next guess.`;	
 		} else if (turn = 27) {
-			document.getElementById("msgField").innerHTML = `You really know Charlote! Play again? Press any key to continue`;
+			document.getElementById("msgField").innerHTML = `You really know Charlotte! Play again? Press any key to continue`;
 			document.getElementById("msgField").style.color = "#1D1160";
 			turn=0;
 			wins=0;
