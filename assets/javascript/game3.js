@@ -234,7 +234,7 @@ function guessMatch(userGuess) {
 	//if the key passes the regex test, push it to the bank else, type another letter
 	var patt = /^[a-zA-Z]+/;
 	var test = patt.test(userGuess);
-	console.log(`${userGuess} is ${test}`)
+	// console.log(`${userGuess} is ${test}`)
 	if (test === true) {
 		document.getElementById("error").innerHTML = "";
 		guessesBank.push(userGuess);//logs all valid key codes to guesses Array
@@ -318,8 +318,8 @@ gameObject.shuffleWords(gameObject.gameWords);
 	document.getElementById("mobile").addEventListener("input", function(event) { 
 		myAudio.pause();
 		userGuess = event.data.toUpperCase();
-		console.log(event);
-		console.log(event.data);
+		// console.log(event);
+		// console.log(event.data);
 		guessMatch(userGuess);
 		roundTracker();
 		document.getElementById("mobile").value = "";
