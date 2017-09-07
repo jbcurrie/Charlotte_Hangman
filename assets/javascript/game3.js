@@ -220,11 +220,14 @@ function start (bool,correctWord) {
 //functions (to run when needed)
 
 	//if keys match redefine dash, guessesLeft --,
-	function guessMatch (letter) {
+	function guessMatch(userGuess) {
 		var guessesBank = [];
 		var validGuess = false;
-		
-		if (event.keyCode > 64 && event.keyCode < 91) {
+		//if the key passes the regex test, push it to the bank else, type another letter
+		var patt = /^[a-zA-Z]+/;
+		var test = patt.test(userGuess);
+		console.log(`${userGuess} is ${test}`)
+		if (test === true) {
 			document.getElementById("error").innerHTML = "";
 			guessesBank.push(userGuess);//logs all valid key codes to guesses Array
 			//https://stackoverflow.com/questions/15052702/count-unique-elements-in-array-without-sorting
@@ -232,10 +235,24 @@ function start (bool,correctWord) {
 				//literally says 1 equals 1 in the console log (or just 1)
 				uniqueGuesses[guessesBank[k]] = 1 + (uniqueGuesses[guessesBank[k]] || 0);//logs unique object name for each guess
 				validGuess = true;
-			} 		
-		} else if (event.keyCode < 64 || event.keyCode > 91) {
-       			document.getElementById("error").innerHTML = "Type another letter to continue!";
-			};
+			} 	
+		} else if (test === false) {
+			document.getElementById("error").innerHTML = "Type another letter to continue!";
+		} else {
+			console.log("something went awry");
+		}
+		// if (event.keyCode > 64 && event.keyCode < 91) {
+		// 	document.getElementById("error").innerHTML = "";
+		// 	guessesBank.push(userGuess);//logs all valid key codes to guesses Array
+		// 	//https://stackoverflow.com/questions/15052702/count-unique-elements-in-array-without-sorting
+		// 	for (var k = 0; k < guessesBank.length; k++) {
+		// 		//literally says 1 equals 1 in the console log (or just 1)
+		// 		uniqueGuesses[guessesBank[k]] = 1 + (uniqueGuesses[guessesBank[k]] || 0);//logs unique object name for each guess
+		// 		validGuess = true;
+		// 	} 		
+		// } else if (event.keyCode < 64 || event.keyCode > 91) {
+       	// 		document.getElementById("error").innerHTML = "Type another letter to continue!";
+		// };
 		var uniqueGuessesKeys = Object.keys(uniqueGuesses);	
 		document.getElementById("guesses").innerHTML = "Guesses: " + uniqueGuessesKeys.join('&nbsp;&nbsp;');
 		//console.log(uniqueGuessesKeys);
@@ -307,16 +324,25 @@ gameObject.shuffleWords(gameObject.gameWords);
 //shuffle words once so you can't repeat them
 
 	//document key up
-	document.getElementById("mobile").addEventListener("keyup", function(event) {
-	//document.getElementById("mobile").onkeypress = function(event) {
+	document.getElementById("mobile").addEventListener("input", function(event) { 
 		myAudio.pause();
-		userGuess = String.fromCharCode(event.keyCode || event.which || event.charCode).toUpperCase();
+		userGuess = event.data.toUpperCase();
 		console.log(event);
-		console.log(`keyCode:${event.keyCode} which:${event.which} charCode:${event.charCode} event.key:${event.key}`)
+		console.log(event.data);
 		guessMatch(userGuess);
 		roundTracker();
-		//do a form reset instead
-		document.getElementById("mobile").value = " ";
+		document.getElementById("mobile").value = "";
 	});
+	// document.getElementById("mobile").addEventListener("keyup", function(event) {
+	// //document.getElementById("mobile").onkeypress = function(event) {
+	// 	myAudio.pause();
+	// 	userGuess = String.fromCharCode(event.keyCode || event.which || event.charCode).toUpperCase();
+	// 	console.log(event);
+	// 	console.log(`keyCode:${event.keyCode} which:${event.which} charCode:${event.charCode} event.key:${event.key}`)
+	// 	guessMatch(userGuess);
+	// 	roundTracker();
+	// 	//do a form reset instead
+	// 	document.getElementById("mobile").value = " ";
+	// });
 
 //};
