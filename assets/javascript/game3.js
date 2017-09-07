@@ -183,7 +183,7 @@ var gameObject = {
 }
 
 
-function start () {
+function start (bool,correctWord) {
 	//console.log(gameObject);
 	gameObject.gameWordsFunction();
 	gameObject.getCurrentWord();
@@ -202,6 +202,20 @@ function start () {
 	document.getElementById("guesses").style.fontWeight="bold";
 	document.querySelector("body").style.backgroundImage="url(assets/images/Charlotte_background.png)";
 	document.querySelector("h1").style.backgroundColor="#1D1160";
+	//if bool is win show win message, loss, end of game with option to play again. 
+	//document create  temp message that clears on button click
+	if (bool === true) {
+		document.getElementById("msgField").innerHTML = `Correct! ${correctWord}.`;
+	} else if (bool === false) {
+		document.getElementById("msgField").innerHTML = `You lost that round! The correct answer was ${correctWord}.`;
+	} else {
+		if (turn < 27) {
+		document.getElementById("msgField").innerHTML = `Type the letter of your next guess.`;	
+		} else {
+		document.getElementById("msgField").innerHTML = `You really know Charlote! Play again?`;
+		//if they type y, start game. 
+		}
+	}
 };
 //functions (to run when needed)
 
@@ -253,24 +267,32 @@ function start () {
 
 //eachRound function
 	function roundTracker () {
+		var bool;
+		var correctWordArr = gameObject.currentWordArray.toString();
+		var correctWord = gameObject.currentWordArray.join('');
 		//document write guesses, guesses left, dashArray
 		document.getElementById("guesses-left").innerHTML = "Guesses Left: " + guessesLeft;
 		document.getElementById("wins").innerHTML = "Wins: " + wins;
 		document.getElementById("losses").innerHTML = "Losses: " + losses;
 		//if dash array string matches current word string, wins ++
-		if (gameObject.dashArray.toString() === gameObject.currentWordArray.toString()) {
+		if (gameObject.dashArray.toString() === correctWordArr) {
 			wins++;
 			myAudio.play();
+			// alert("you won that round")
 		//	console.log("player wins");
 			turn++;
-			start();
+			bool = true;
+			start(bool,correctWord);
 		} else if (guessesLeft < 1) {
 			losses++;
-			start();
+			bool = false;
+			turn++;
+			// alert("you lost that round")
+			start(bool,correctWord);
 		}
 		if (turn > 27) {
-			alert ("YOU REALLY KNOW CHARLOTTE!");
-			start();
+			// alert ("YOU REALLY KNOW CHARLOTTE!");
+			start(bool,correctWord);
 		}
 	}
 
@@ -289,12 +311,12 @@ gameObject.shuffleWords(gameObject.gameWords);
 	//document.getElementById("mobile").onkeypress = function(event) {
 		myAudio.pause();
 		userGuess = String.fromCharCode(event.keyCode || event.which || event.charCode).toUpperCase();
+		console.log(event);
+		console.log(`keyCode:${event.keyCode} which:${event.which} charCode:${event.charCode} event.key:${event.key}`)
 		guessMatch(userGuess);
 		roundTracker();
-
-	document.getElementById("mobile").value = " ";
-
-		
+		//do a form reset instead
+		document.getElementById("mobile").value = " ";
 	});
 
 //};

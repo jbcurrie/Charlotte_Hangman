@@ -1,11 +1,6 @@
 body {
-  /*font-family: 'Playfair Display', serif;*/
-  /*font-family: 'Kaushan Script', cursive;*/
-	/*font-family: 'Lovers Quarrel', cursive;*/
-	/*font-family: 'Niconne', cursive;*/
 	font-family: 'Courgette', cursive;
 	color: #ffffff;
-	/*font-family: 'Homemade Apple', cursive;*/
 }
 
 /*p, li, {
@@ -19,10 +14,12 @@ body {
 	background-color: #514e44;
 }
 
-/*#hint {
+#hint {
 	font-weight: normal;
 }
-*/
+
+
+
 /*
 font-family: 'Kaushan Script', cursive;
 font-family: 'Tangerine', cursive;
